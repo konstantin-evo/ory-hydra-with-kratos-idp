@@ -1,0 +1,62 @@
+serve:
+  cookies:
+    same_site_mode: Lax
+  public:
+    cors:
+      enabled: true
+      allowed_origins:
+        - http://127.0.0.1:8080
+        - http://localhost:8080
+      allowed_methods:
+        - POST
+        - GET
+        - PUT
+        - PATCH
+        - DELETE
+      allowed_headers:
+        - Authorization
+      exposed_headers:
+        - Content-Type
+  # Enable CORS for the admin endpoint only during local testing
+  admin:
+    cors:
+      enabled: true
+      allowed_origins:
+        - http://127.0.0.1:8080
+        - http://localhost:8080
+      allowed_methods:
+        - GET
+        - POST
+        - OPTIONS
+      allowed_headers:
+        - Content-Type
+      exposed_headers:
+        - Content-Type
+
+# 4444: Hydra public URL
+# 4455: Kratos UI: Kratos sign up, sign in, logout
+# 4434: Kratos admin URL
+urls:
+  self:
+    issuer: http://127.0.0.1:4444
+  consent: http://127.0.0.1:4455/consent
+  login: http://127.0.0.1:4455/login
+  logout: http://127.0.0.1:4455/logout
+  identity_provider:
+    url: http://127.0.0.1:4434
+
+secrets:
+  system:
+    - CHANGE_ME_TO_REAL_SECRET
+
+oidc:
+  subject_identifiers:
+    supported_types:
+      - pairwise
+      - public
+    pairwise:
+      salt: CHANGE_ME_TO_REAL_SECRET
+
+log:
+  leak_sensitive_values: true
+  level: info
